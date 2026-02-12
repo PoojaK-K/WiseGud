@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WiseGud - Mental Health Check</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #ffe5ec, #e8f0ff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: #ffffffb8;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 400px;
+    }
+
+    h1 {
+      color: #6a5acd;
+    }
+
+    .intro {
+      color: #444;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background: #a5d8ff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #74c0fc;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #options button {
+      display: block;
+      width: 100%;
+      margin: 8px 0;
+      background: #ffd6e0;
+    }
+
+    #options button:hover {
+      background: #ffb3c6;
+    }
+
+    #resultText {
+      font-size: 18px;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>WiseGud 💙</h1>
+  <p class="intro">Let’s gently check how you’re feeling today 🌸</p>
+
+  <button onclick="startQuiz()">Start</button>
+
+  <div id="quiz" class="hidden">
+    <h3 id="question"></h3>
+    <div id="options"></div>
+  </div>
+
+  <div id="result" class="hidden">
+    <p id="resultText"></p>
+    <button onclick="location.reload()">Take Again</button>
+  </div>
+</div>
+
+<script>
+
+const scriptURL = "https://script.google.com/macros/s/AKfycbzw0OPZ5P5kg5QlDbA3mtaaTKiCiF2nXYJ1CMcIxe1FyUDErNnIVpnvhbtdwgF438-v/exec";
+
+const questions = [
+  {
+    question: "How have you been feeling lately?",
+    options: [
+      { text: "Very Happy", score: 1 },
+      { text: "Okay", score: 2 },
+      { text: "Stressed", score: 3 },
+      { text: "Very Low", score: 4 }
+    ]
+  },
+  {
+    question: "How is your sleep?",
+    options: [
+      { text: "Sleeping well", score: 1 },
+      { text: "Sometimes disturbed", score: 2 },
+      { text: "Poor sleep", score: 3 },
+      { text: "Hardly sleeping", score: 4 }
+    ]
+  },
+  {
+    question: "How often do you feel anxious?",
+    options: [
+      { text: "Rarely", score: 1 },
+      { text: "Sometimes", score: 2 },
+      { text: "Often", score: 3 },
+      { text: "Almost Always", score: 4 }
+    ]
+  }
+];
+
+let currentQuestion = 0;
+let totalScore = 0;
+
+function startQuiz() {
+  document.querySelector("button").style.display = "none";
+  document.getElementById("quiz").classList.remove("hidden");
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById("question").innerText = q.question;
+  
+  const optionsDiv = document.getElementById("options");
+  optionsDiv.innerHTML = "";
+
+  q.options.forEach(option => {
+    const btn = document.createElement("button");
+    btn.innerText = option.text;
+    btn.onclick = () => selectOption(option.score);
+    optionsDiv.appendChild(btn);
+  });
+}
+
+function selectOption(score) {
+  totalScore += score;
+  currentQuestion++;
+
+  if (currentQuestion < questions.length) {
+    showQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  document.getElementById("quiz").classList.add("hidden");
+  document.getElementById("result").classList.remove("hidden");
+
+  let message = "";
+
+  if (totalScore <= 4) {
+    message = "You seem emotionally balanced 💙 Keep taking care!";
+  } else if (totalScore <= 8) {
+    message = "You might be experiencing some stress 🌸 Try relaxing and talking to someone.";
+  } else {
+    message = "You may be going through a tough time 💗 Please consider reaching out for support.";
+  }
+
+  document.getElementById("resultText").innerText = message;
+
+  // 👇 THIS IS WHERE FETCH GOES
+  fetch("https://script.google.com/macros/s/AKfycbwy-uLYrQC_3YmMLqJcY4LCsDcX-dF1dV6JGg_7RFm7NRIh9RxsGm2XLmq4StZ9ji7g/exec", {
+    method: "POST",
+    mode: "no-cors",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8"
+    },
+    body: JSON.stringify({
+      score: totalScore,
+      result: message
+    })
+  });
+}
+
+
+</script>
+
+</body>
+</html>
