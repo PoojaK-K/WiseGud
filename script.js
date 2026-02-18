@@ -186,7 +186,7 @@ function showResult() {
 }
 function sendToGoogleSheets(name, email, score, resultText) {
 
-    fetch("https://script.google.com/macros/s/AKfycbyzEmSCA7dcHxDjE0DQ9MgdoYP4-ywkAW6qpTsFQglP7x_alFhFBsDoepRf5rlovxogNg/exec", {
+    fetch("https://script.googleusercontent.com/macros/echo?user_content_key=AY5xjrQ4cZVHL7HPvRQnZQH7ab9-O5g0X04DDT8su0R_IKw5GqBcQOm-q8t79NG3GOzhBIGMiVpWl5pn_NFfah3aXvHMRX7f_24rtWk822UTaQ5DJpuoydvd0i-5azmw7WwBoQ3YUWpaqX-KH-hZiYqlIXJjlACj8zzDGU5OxP5uoIbwUUAHtQ-4meYgDZdzdDLxmi6ckYXql5uIqlS3Ycqx7KHCEZcUoXWs8yLqQAoMP-KIzeQdi_W4yrENNOQjnI3hqGjxVUJhKYHgHkjz_vN_boUM2jhCjLeFbbEtrzQc&lib=MOi3pFzyo71YeiUSPs4xOK8vUpigpoChT", {
         method: "POST",
         mode: "no-cors",
         headers: {
