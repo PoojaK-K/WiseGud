@@ -1,25 +1,40 @@
-# WiseGud
+# WiseGud 💙  
+A Mental Health Self-Assessment Web Application
 
-## Overview
-WiseGud is a smart and user-friendly web application designed to provide structured guidance and simplified solutions for users. The platform focuses on delivering clear information, an intuitive interface, and a smooth user experience.
+## 📌 Project Overview
 
-## 🎯 Objective
-The goal of WiseGud is to create a clean and accessible platform that helps users navigate content easily while maintaining performance and simplicity.
+WiseGud is a simple full-stack web application that allows users to take a short mental health self-assessment quiz.  
+The responses are automatically stored in Google Sheets using Google Apps Script as the backend.
 
-## Features
-- Clean and minimal UI
-- Responsive design
-- Structured content layout
-- Easy navigation
-- Optimized styling using CSS
+This project demonstrates:
 
-## Tech Stack
+- Frontend Development (HTML, CSS, JavaScript)
+- Backend Integration (Google Apps Script)
+- Database Storage (Google Sheets)
+- API Communication using Fetch
+
+---
+
+## 🚀 Features
+
+- Interactive MCQ-based mental health quiz
+- Score calculation logic
+- Personalized feedback based on score
+- Automatic data storage in Google Sheets
+- Timestamp recording for each submission
+
+---
+
+## 🛠️ Tech Stack
+
+Frontend:
 - HTML
 - CSS
-- (Add JavaScript if used)
+- JavaScript
 
-## Project Structure
-│
-├── index.html
-├── style.css
-└── assets/
+Backend:
+- Google Apps Script (Web App)
+
+Database:
+- Google Sheets
+
