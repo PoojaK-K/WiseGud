@@ -1,52 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WiseGud Mental Health Quiz</title>
-
-<style>
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom, #ffe5ec, #e8f0ff);
+  margin: 0;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin: 0;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ffd6e8, #e6d6ff);
+}
+
+/* Floating Stars */
+.star {
+  position: absolute;
+  color: white;
+  animation: float 6s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes float {
+  from { transform: translateY(100vh); }
+  to { transform: translateY(-10vh); }
 }
 
 .container {
-  background: #ffffffb8;
+  background: rgba(255,255,255,0.9);
   padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  text-align: center;
+  border-radius: 25px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   width: 90%;
-  max-width: 400px;
+  max-width: 450px;
+  text-align: center;
+  backdrop-filter: blur(10px);
 }
 
 h1 {
-  color: #6a5acd;
-}
-
-.intro {
-  color: #444;
-  margin-bottom: 20px;
+  color: #7b68ee;
 }
 
 button {
-  background: #a5d8ff;
-  border: none;
   padding: 10px 20px;
+  border: none;
   border-radius: 12px;
-  font-size: 16px;
   cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  background: #ffb6d9;
   transition: 0.3s;
 }
 
 button:hover {
-  background: #74c0fc;
+  background: #dda0ff;
 }
 
 .hidden {
@@ -57,156 +60,23 @@ button:hover {
   display: block;
   width: 100%;
   margin: 8px 0;
-  background: #ffd6e0;
-  transition: 0.3s;
-}
-
-#options button:hover {
-  background: #ffb3c6;
+  background: #f8c8ff;
 }
 
 #options button.active {
-  background: #ff8fab;
+  background: #c77dff;
   color: white;
 }
 
-#resultText {
-  font-size: 18px;
-  margin: 20px 0;
-}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-<h1>🌿 WiseGud Quiz 🌿</h1>
-<p class="intro">Check your mental wellness level 💖</p>
-
-<button id="startBtn">Start Quiz</button>
-
-<div id="quiz" class="hidden">
-  <h3 id="question"></h3>
-  <div id="options"></div>
-  <button id="nextBtn" disabled>Next</button>
-</div>
-
-<div id="result" class="hidden">
-  <h3>Your Result</h3>
-  <p id="resultText"></p>
-  <button onclick="location.reload()">Restart</button>
-</div>
-
-</div>
-
-<script>
-
-const questions = [
-{
-  question: "How often do you feel stressed?",
-  options: ["Rarely", "Sometimes", "Often", "Almost always"],
-  scores: [1, 2, 3, 4]
-},
-{
-  question: "How well do you sleep?",
-  options: ["Very well", "Okay", "Poorly", "Barely sleep"],
-  scores: [1, 2, 3, 4]
-},
-{
-  question: "Do you enjoy your daily activities?",
-  options: ["Always", "Mostly", "Sometimes", "Rarely"],
-  scores: [1, 2, 3, 4]
-},
-{
-  question: "How often do you feel anxious?",
-  options: ["Rarely", "Sometimes", "Often", "Always"],
-  scores: [1, 2, 3, 4]
-},
-{
-  question: "Do you feel supported by people around you?",
-  options: ["Always", "Often", "Sometimes", "Never"],
-  scores: [1, 2, 3, 4]
-}
-];
-
-let currentQuestion = 0;
-let totalScore = 0;
-let selectedScore = 0;
-
-const startBtn = document.getElementById("startBtn");
-const quiz = document.getElementById("quiz");
-const questionEl = document.getElementById("question");
-const optionsEl = document.getElementById("options");
-const nextBtn = document.getElementById("nextBtn");
-const result = document.getElementById("result");
-const resultText = document.getElementById("resultText");
-
-startBtn.addEventListener("click", () => {
-  startBtn.classList.add("hidden");
-  quiz.classList.remove("hidden");
-  loadQuestion();
-});
-
-function loadQuestion() {
-  const q = questions[currentQuestion];
-  questionEl.textContent = q.question;
-  optionsEl.innerHTML = "";
-  selectedScore = 0;
-  nextBtn.disabled = true;
-
-  q.options.forEach((opt, index) => {
-    const btn = document.createElement("button");
-    btn.textContent = opt;
-
-    btn.addEventListener("click", () => {
-
-      // remove active class
-      document.querySelectorAll("#options button").forEach(b => {
-        b.classList.remove("active");
-      });
-
-      btn.classList.add("active");
-
-      selectedScore = q.scores[index];
-      nextBtn.disabled = false;
-    });
-
-    optionsEl.appendChild(btn);
-  });
+input {
+  width: 90%;
+  padding: 8px;
+  margin: 5px 0;
+  border-radius: 8px;
+  border: 1px solid #ddd;
 }
 
-nextBtn.addEventListener("click", () => {
-  totalScore += selectedScore;
-  currentQuestion++;
-
-  if (currentQuestion < questions.length) {
-    loadQuestion();
-  } else {
-    showResult();
-  }
-});
-
-function showResult() {
-  quiz.classList.add("hidden");
-  result.classList.remove("hidden");
-
-  let msg = "";
-
-  if (totalScore <= 7) {
-    msg = "💖 You're doing great! Keep maintaining your mental health.";
-  } else if (totalScore <= 12) {
-    msg = "🙂 You're mostly fine, but occasional stress is normal.";
-  } else if (totalScore <= 16) {
-    msg = "😟 You might be experiencing stress. Try relaxing techniques.";
-  } else {
-    msg = "💔 You may need support. Consider speaking to someone.";
-  }
-
-  resultText.textContent = msg;
+#scoreDisplay {
+  margin-top: 10px;
+  font-weight: bold;
 }
-
-</script>
-
-</body>
-</html>
