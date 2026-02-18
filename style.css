@@ -1,82 +1,54 @@
 body {
-  font-family: 'Segoe UI', sans-serif;
-  margin: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  background: linear-gradient(135deg, #ffd6e8, #e6d6ff);
-}
-
-/* Floating Stars */
-.star {
-  position: absolute;
-  color: white;
-  animation: float 6s linear infinite;
-  opacity: 0.6;
-}
-
-@keyframes float {
-  from { transform: translateY(100vh); }
-  to { transform: translateY(-10vh); }
-}
-
-.container {
-  background: rgba(255,255,255,0.9);
-  padding: 30px;
-  border-radius: 25px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  width: 90%;
-  max-width: 450px;
-  text-align: center;
-  backdrop-filter: blur(10px);
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #ffd6e8, #ffeaf4);
 }
 
 h1 {
-  color: #7b68ee;
+    color: #c2185b;
 }
 
-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-top: 10px;
-  background: #ffb6d9;
-  transition: 0.3s;
-}
-
-button:hover {
-  background: #dda0ff;
-}
-
-.hidden {
-  display: none;
-}
-
-#options button {
-  display: block;
-  width: 100%;
-  margin: 8px 0;
-  background: #f8c8ff;
-}
-
-#options button.active {
-  background: #c77dff;
-  color: white;
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    max-width: 600px;
+    margin: auto;
 }
 
 input {
-  width: 90%;
-  padding: 8px;
-  margin: 5px 0;
-  border-radius: 8px;
-  border: 1px solid #ddd;
+    padding: 10px;
+    width: 90%;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
 }
 
-#scoreDisplay {
-  margin-top: 10px;
-  font-weight: bold;
+button {
+    padding: 12px 20px;
+    margin: 8px;
+    border: none;
+    border-radius: 8px;
+    background-color: #ff9ecb;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ff7fb8;
+}
+
+#error {
+    color: red;
+    font-size: 14px;
+}
+
+.option-btn {
+    display: block;
+    width: 100%;
+    margin: 8px 0;
 }
