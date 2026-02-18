@@ -1,149 +1,162 @@
-// Floating stars
-for(let i=0;i<25;i++){
-  let star=document.createElement("div");
-  star.className="star";
-  star.innerHTML="★";
-  star.style.left=Math.random()*100+"vw";
-  star.style.animationDuration=(3+Math.random()*5)+"s";
-  star.style.fontSize=(10+Math.random()*20)+"px";
-  document.body.appendChild(star);
-}
-
 const questions = [
 {
-  question: "How often do you feel stressed?",
-  options: ["Rarely", "Sometimes", "Often", "Almost always"],
-  scores: [1,2,3,4]
+question: "1. How do you usually respond to stressful situations?",
+options: [
+    { text: "Stay calm and solve it step by step", score: 1 },
+    { text: "Feel stressed but try to manage", score: 2 },
+    { text: "Become anxious and overwhelmed", score: 3 },
+    { text: "Avoid or completely shut down", score: 4 }
+]
 },
 {
-  question: "How well do you sleep?",
-  options: ["Very well", "Okay", "Poorly", "Barely sleep"],
-  scores: [1,2,3,4]
+question: "2. How often do you experience negative thoughts?",
+options: [
+    { text: "Rarely", score: 1 },
+    { text: "Occasionally", score: 2 },
+    { text: "Frequently", score: 3 },
+    { text: "Almost constantly", score: 4 }
+]
 },
 {
-  question: "Do you enjoy your daily activities?",
-  options: ["Always", "Mostly", "Sometimes", "Rarely"],
-  scores: [1,2,3,4]
+question: "3. How would you describe your sleep pattern?",
+options: [
+    { text: "Consistent and restful", score: 1 },
+    { text: "Slightly irregular", score: 2 },
+    { text: "Disturbed or insufficient", score: 3 },
+    { text: "Very poor and exhausting", score: 4 }
+]
 },
 {
-  question: "How often do you feel anxious?",
-  options: ["Rarely", "Sometimes", "Often", "Always"],
-  scores: [1,2,3,4]
+question: "4. How supported do you feel emotionally?",
+options: [
+    { text: "Strongly supported", score: 1 },
+    { text: "Somewhat supported", score: 2 },
+    { text: "Rarely supported", score: 3 },
+    { text: "Completely alone", score: 4 }
+]
 },
 {
-  question: "Do you feel supported by people around you?",
-  options: ["Always", "Often", "Sometimes", "Never"],
-  scores: [1,2,3,4]
+question: "5. How often do you feel mentally exhausted?",
+options: [
+    { text: "Rarely", score: 1 },
+    { text: "Sometimes", score: 2 },
+    { text: "Often", score: 3 },
+    { text: "Almost daily", score: 4 }
+]
+},
+{
+question: "6. How do you handle criticism?",
+options: [
+    { text: "Reflect calmly", score: 1 },
+    { text: "Feel uncomfortable but accept it", score: 2 },
+    { text: "Take it personally", score: 3 },
+    { text: "Feel deeply hurt or upset", score: 4 }
+]
+},
+{
+question: "7. How often do you feel genuinely happy?",
+options: [
+    { text: "Very often", score: 1 },
+    { text: "Sometimes", score: 2 },
+    { text: "Rarely", score: 3 },
+    { text: "Almost never", score: 4 }
+]
+},
+{
+question: "8. When facing problems, you:",
+options: [
+    { text: "Seek solutions immediately", score: 1 },
+    { text: "Delay but eventually handle it", score: 2 },
+    { text: "Procrastinate often", score: 3 },
+    { text: "Avoid completely", score: 4 }
+]
+},
+{
+question: "9. How often do you feel anxious without clear reason?",
+options: [
+    { text: "Rarely", score: 1 },
+    { text: "Occasionally", score: 2 },
+    { text: "Frequently", score: 3 },
+    { text: "Almost all the time", score: 4 }
+]
+},
+{
+question: "10. How well can you relax during free time?",
+options: [
+    { text: "Very easily", score: 1 },
+    { text: "With some effort", score: 2 },
+    { text: "Rarely able to relax", score: 3 },
+    { text: "Never feel relaxed", score: 4 }
+]
 }
 ];
 
-let currentQuestion=0;
-let totalScore=0;
-let selectedScore=0;
+let currentQuestion = 0;
+let totalScore = 0;
 
-const startBtn=document.getElementById("startBtn");
-const quiz=document.getElementById("quiz");
-const questionEl=document.getElementById("question");
-const optionsEl=document.getElementById("options");
-const nextBtn=document.getElementById("nextBtn");
-const result=document.getElementById("result");
-const resultText=document.getElementById("resultText");
-const scoreDisplay=document.getElementById("scoreDisplay");
-const submitBtn=document.getElementById("submitBtn");
+function startQuiz() {
+const name = document.getElementById("name").value;
+const email = document.getElementById("email").value;
+const error = document.getElementById("error");
 
-startBtn.addEventListener("click",()=>{
-  startBtn.classList.add("hidden");
-  quiz.classList.remove("hidden");
-  loadQuestion();
-});
-
-function loadQuestion(){
-  const q=questions[currentQuestion];
-  questionEl.textContent=q.question;
-  optionsEl.innerHTML="";
-  selectedScore=0;
-  nextBtn.disabled=true;
-
-  q.options.forEach((opt,index)=>{
-    const btn=document.createElement("button");
-    btn.textContent=opt;
-
-    btn.addEventListener("click",()=>{
-      document.querySelectorAll("#options button").forEach(b=>b.classList.remove("active"));
-      btn.classList.add("active");
-      selectedScore=q.scores[index];
-      nextBtn.disabled=false;
-    });
-
-    optionsEl.appendChild(btn);
-  });
-}
-
-nextBtn.addEventListener("click",()=>{
-  totalScore+=selectedScore;
-  currentQuestion++;
-
-  if(currentQuestion<questions.length){
-    loadQuestion();
-  } else {
-    showResult();
-  }
-});
-
-function showResult(){
-  quiz.classList.add("hidden");
-  result.classList.remove("hidden");
-
-  let percentage=Math.round((totalScore/20)*100);
-  let msg="";
-
-  if(totalScore<=7){
-    msg="Strong emotional balance and healthy coping mechanisms.";
-  }
-  else if(totalScore<=12){
-    msg="Mild stress levels detected. Practice relaxation strategies.";
-  }
-  else if(totalScore<=16){
-    msg="Noticeable stress detected. Consider structured stress management.";
-  }
-  else{
-    msg="High stress levels. Professional guidance is recommended.";
-  }
-
-  scoreDisplay.innerHTML=`Total Score: ${totalScore}/20 <br> Wellness Percentage: ${percentage}%`;
-  resultText.textContent=msg;
-}
-
-submitBtn.addEventListener("click",()=>{
-
-  const name=document.getElementById("username").value;
-  const email=document.getElementById("email").value;
-
-  if(!name || !email){
-    alert("Please enter your name and email.");
+if (!name || !email) {
+    error.textContent = "Please enter both Name and Email to continue.";
     return;
-  }
+}
 
-  let percentage=Math.round((totalScore/20)*100);
+error.textContent = "";
+document.getElementById("intro").style.display = "none";
+document.getElementById("quiz").style.display = "block";
+loadQuestion();
+}
 
-  fetch("https://script.google.com/macros/s/AKfycbxGe_CpyeMjQ70LdcuBl6BsTFJIG6cz7fUQ_zUpsQ1kso63JZxlJqgdYBTHD5ZkVjo8Eg/exec",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({
-      name:name,
-      email:email,
-      score:totalScore,
-      percent:percentage,
-      feedback:resultText.textContent
-    })
-  })
-  .then(res=>res.text())
-  .then(data=>{
-    alert("Report saved and PDF sent to your email.");
-  })
-  .catch(err=>{
-    alert("Error sending report.");
-  });
+function loadQuestion() {
+const q = questions[currentQuestion];
+document.getElementById("question").innerText = q.question;
 
+const optionsDiv = document.getElementById("options");
+optionsDiv.innerHTML = "";
+
+q.options.forEach(option => {
+    const btn = document.createElement("button");
+    btn.classList.add("option-btn");
+    btn.innerText = option.text;
+    btn.onclick = () => selectAnswer(option.score);
+    optionsDiv.appendChild(btn);
 });
+}
 
+function selectAnswer(score) {
+totalScore += score;
+currentQuestion++;
+
+if (currentQuestion < questions.length) {
+    loadQuestion();
+} else {
+    showResult();
+}
+}
+
+function showResult() {
+document.getElementById("quiz").style.display = "none";
+document.getElementById("resultCard").style.display = "block";
+
+let resultText = "";
+
+if (totalScore <= 18) {
+    resultText = "Healthy Emotional State. You demonstrate strong coping skills and emotional balance.";
+}
+else if (totalScore <= 28) {
+    resultText = "Moderate Stress Level. Some areas may need attention and better stress management.";
+}
+else if (totalScore <= 40) {
+    resultText = "High Stress Level. Consider prioritizing rest and emotional support.";
+}
+else {
+    resultText = "Significant Emotional Distress. Professional guidance may be beneficial.";
+}
+
+document.getElementById("result").innerHTML =
+resultText +
+"<br><br><small>This assessment is for awareness purposes only and not a clinical diagnosis.</small>";
+}
