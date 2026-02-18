@@ -18,7 +18,7 @@ This project demonstrates:
 ## 🚀 Features
 
 - Interactive MCQ-based mental health quiz
-- Score calculation logic
+- Score calculation logic 
 - Personalized feedback based on score
 - Automatic data storage in Google Sheets
 - Timestamp recording for each submission
