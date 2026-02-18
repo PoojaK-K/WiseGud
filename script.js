@@ -138,25 +138,49 @@ if (currentQuestion < questions.length) {
 }
 
 function showResult() {
-document.getElementById("quiz").style.display = "none";
-document.getElementById("resultCard").style.display = "block";
+    document.getElementById("quiz").style.display = "none";
+    document.getElementById("resultCard").style.display = "block";
 
-let resultText = "";
+    let resultText = "";
 
-if (totalScore <= 18) {
-    resultText = "Healthy Emotional State. You demonstrate strong coping skills and emotional balance.";
-}
-else if (totalScore <= 28) {
-    resultText = "Moderate Stress Level. Some areas may need attention and better stress management.";
-}
-else if (totalScore <= 40) {
-    resultText = "High Stress Level. Consider prioritizing rest and emotional support.";
-}
-else {
-    resultText = "Significant Emotional Distress. Professional guidance may be beneficial.";
-}
+    if (totalScore <= 18) {
+        resultText = `
+        <h3>🌿 Healthy Emotional State</h3>
+        <p>You demonstrate strong emotional balance and effective coping skills.</p>
+        <p>✨ You are able to manage stress constructively.<br>
+        💚 You maintain positive emotional stability.<br>
+        🌸 Keep nurturing your mental wellness habits.</p>
+        `;
+    }
+    else if (totalScore <= 28) {
+        resultText = `
+        <h3>🌼 Moderate Stress Level</h3>
+        <p>You are managing, but certain areas may need attention.</p>
+        <p>⚖️ Some emotional strain is present.<br>
+        🧠 Consider improving relaxation and sleep habits.<br>
+        🤝 Talking to someone you trust may help.</p>
+        `;
+    }
+    else if (totalScore <= 40) {
+        resultText = `
+        <h3>⚠️ High Stress Level</h3>
+        <p>You may be experiencing significant emotional pressure.</p>
+        <p>😟 Frequent stress indicators detected.<br>
+        💤 Rest and recovery are important.<br>
+        💬 Seeking emotional support is strongly recommended.</p>
+        `;
+    }
+    else {
+        resultText = `
+        <h3>🚨 Significant Emotional Distress</h3>
+        <p>Your responses indicate elevated distress levels.</p>
+        <p>💔 Emotional overload may be present.<br>
+        📞 Consider speaking with a mental health professional.<br>
+        🌟 Support and guidance can make a difference.</p>
+        `;
+    }
 
-document.getElementById("result").innerHTML =
-resultText +
-"<br><br><small>This assessment is for awareness purposes only and not a clinical diagnosis.</small>";
+    document.getElementById("result").innerHTML =
+        resultText +
+        `<br><small>This assessment is for awareness purposes only and not a clinical diagnosis.</small>`;
 }
