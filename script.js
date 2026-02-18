@@ -184,3 +184,20 @@ function showResult() {
         resultText +
         `<br><small>This assessment is for awareness purposes only and not a clinical diagnosis.</small>`;
 }
+function sendToGoogleSheets(name, email, score, resultText) {
+
+    fetch("https://script.google.com/macros/s/AKfycbyzEmSCA7dcHxDjE0DQ9MgdoYP4-ywkAW6qpTsFQglP7x_alFhFBsDoepRf5rlovxogNg/exec", {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name: name,
+            email: email,
+            score: score,
+            result: resultText
+        })
+    });
+
+}
