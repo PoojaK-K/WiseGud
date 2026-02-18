@@ -1,138 +1,149 @@
+// Floating stars
+for(let i=0;i<25;i++){
+  let star=document.createElement("div");
+  star.className="star";
+  star.innerHTML="★";
+  star.style.left=Math.random()*100+"vw";
+  star.style.animationDuration=(3+Math.random()*5)+"s";
+  star.style.fontSize=(10+Math.random()*20)+"px";
+  document.body.appendChild(star);
+}
+
 const questions = [
 {
-    question: "How often do you feel stressed?",
-    options: ["Rarely", "Sometimes", "Often", "Almost always"],
-    scores: [1, 2, 3, 4]
+  question: "How often do you feel stressed?",
+  options: ["Rarely", "Sometimes", "Often", "Almost always"],
+  scores: [1,2,3,4]
 },
 {
-    question: "How well do you sleep?",
-    options: ["Very well", "Okay", "Poorly", "Barely sleep"],
-    scores: [1, 2, 3, 4]
+  question: "How well do you sleep?",
+  options: ["Very well", "Okay", "Poorly", "Barely sleep"],
+  scores: [1,2,3,4]
 },
 {
-    question: "Do you enjoy your daily activities?",
-    options: ["Always", "Mostly", "Sometimes", "Rarely"],
-    scores: [1, 2, 3, 4]
+  question: "Do you enjoy your daily activities?",
+  options: ["Always", "Mostly", "Sometimes", "Rarely"],
+  scores: [1,2,3,4]
 },
 {
-    question: "How often do you feel anxious?",
-    options: ["Rarely", "Sometimes", "Often", "Always"],
-    scores: [1, 2, 3, 4]
+  question: "How often do you feel anxious?",
+  options: ["Rarely", "Sometimes", "Often", "Always"],
+  scores: [1,2,3,4]
 },
 {
-    question: "Do you feel supported by people around you?",
-    options: ["Always", "Often", "Sometimes", "Never"],
-    scores: [1, 2, 3, 4]
+  question: "Do you feel supported by people around you?",
+  options: ["Always", "Often", "Sometimes", "Never"],
+  scores: [1,2,3,4]
 }
 ];
 
-let currentQuestion = 0;
-let totalScore = 0;
-let selectedScore = 0;
+let currentQuestion=0;
+let totalScore=0;
+let selectedScore=0;
 
-const startBtn = document.getElementById("startBtn");
-const quiz = document.getElementById("quiz");
-const questionEl = document.getElementById("question");
-const optionsEl = document.getElementById("options");
-const nextBtn = document.getElementById("nextBtn");
-const result = document.getElementById("result");
-const resultText = document.getElementById("resultText");
+const startBtn=document.getElementById("startBtn");
+const quiz=document.getElementById("quiz");
+const questionEl=document.getElementById("question");
+const optionsEl=document.getElementById("options");
+const nextBtn=document.getElementById("nextBtn");
+const result=document.getElementById("result");
+const resultText=document.getElementById("resultText");
+const scoreDisplay=document.getElementById("scoreDisplay");
+const submitBtn=document.getElementById("submitBtn");
 
-startBtn.addEventListener("click", () => {
-    startBtn.classList.add("hidden");
-    quiz.classList.remove("hidden");
-    loadQuestion();
+startBtn.addEventListener("click",()=>{
+  startBtn.classList.add("hidden");
+  quiz.classList.remove("hidden");
+  loadQuestion();
 });
 
-function loadQuestion() {
-    const q = questions[currentQuestion];
-    questionEl.textContent = q.question;
-    optionsEl.innerHTML = "";
-    selectedScore = 0;
-    nextBtn.disabled = true;
+function loadQuestion(){
+  const q=questions[currentQuestion];
+  questionEl.textContent=q.question;
+  optionsEl.innerHTML="";
+  selectedScore=0;
+  nextBtn.disabled=true;
 
-    q.options.forEach((opt, index) => {
-        const btn = document.createElement("button");
-        btn.textContent = opt;
+  q.options.forEach((opt,index)=>{
+    const btn=document.createElement("button");
+    btn.textContent=opt;
 
-        btn.addEventListener("click", () => {
-
-            // Remove active from all buttons
-            document.querySelectorAll("#options button").forEach(b => {
-                b.style.background = "";
-                b.style.color = "";
-            });
-
-            // Highlight selected
-            btn.style.background = "#6ec1e4";
-            btn.style.color = "white";
-
-            selectedScore = q.scores[index];
-            nextBtn.disabled = false;
-        });
-
-        optionsEl.appendChild(btn);
+    btn.addEventListener("click",()=>{
+      document.querySelectorAll("#options button").forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+      selectedScore=q.scores[index];
+      nextBtn.disabled=false;
     });
+
+    optionsEl.appendChild(btn);
+  });
 }
 
-nextBtn.addEventListener("click", () => {
-    totalScore += selectedScore;
-    currentQuestion++;
+nextBtn.addEventListener("click",()=>{
+  totalScore+=selectedScore;
+  currentQuestion++;
 
-    if (currentQuestion < questions.length) {
-        loadQuestion();
-    } else {
-        showResult();
-    }
+  if(currentQuestion<questions.length){
+    loadQuestion();
+  } else {
+    showResult();
+  }
 });
 
-function showResult() {
-    quiz.classList.add("hidden");
-    result.classList.remove("hidden");
+function showResult(){
+  quiz.classList.add("hidden");
+  result.classList.remove("hidden");
 
-    let msg = "";
-    let percentage = Math.round((totalScore / 20) * 100);
+  let percentage=Math.round((totalScore/20)*100);
+  let msg="";
 
-    if (totalScore <= 7) {
-        msg = "💖 You're doing great! Keep maintaining your mental health.";
-    } else if (totalScore <= 12) {
-        msg = "🙂 You're mostly fine, but occasional stress is normal. Take breaks!";
-    } else if (totalScore <= 16) {
-        msg = "😟 You might be experiencing stress. Try mindfulness or talk to someone.";
-    } else {
-        msg = "💔 You may need support. Consider speaking to a professional.";
-    }
+  if(totalScore<=7){
+    msg="Strong emotional balance and healthy coping mechanisms.";
+  }
+  else if(totalScore<=12){
+    msg="Mild stress levels detected. Practice relaxation strategies.";
+  }
+  else if(totalScore<=16){
+    msg="Noticeable stress detected. Consider structured stress management.";
+  }
+  else{
+    msg="High stress levels. Professional guidance is recommended.";
+  }
 
-    resultText.innerHTML = `
-        <p><strong>Total Score:</strong> ${totalScore}/20</p>
-        <p><strong>Health Score:</strong> ${percentage}%</p>
-        <p>${msg}</p>
-    `;
-
-    let username = prompt("Enter your name:");
-
-    if (username) {
-        saveResult(username, totalScore, percentage, msg);
-    }
+  scoreDisplay.innerHTML=`Total Score: ${totalScore}/20 <br> Wellness Percentage: ${percentage}%`;
+  resultText.textContent=msg;
 }
 
-// 🌿 Send data to Google Sheets
-function saveResult(name, score, percent, feedback) {
+submitBtn.addEventListener("click",()=>{
 
-    fetch("https://script.google.com/macros/s/AKfycbw9LIm_9DroG7wp3l0EAlw8luVYIbPDEVodDHUsR32arKN6aYODxzhlYeBSAozBy3yZ/exec", {
-        method: "POST",
-        body: JSON.stringify({
-            name: name,
-            score: score,
-            percent: percent,
-            feedback: feedback,
-            date: new Date().toLocaleString()
-        }),
-        headers: {
-            "Content-Type": "application/json"
-        }
+  const name=document.getElementById("username").value;
+  const email=document.getElementById("email").value;
+
+  if(!name || !email){
+    alert("Please enter your name and email.");
+    return;
+  }
+
+  let percentage=Math.round((totalScore/20)*100);
+
+  fetch("https://script.google.com/macros/s/AKfycbxGe_CpyeMjQ70LdcuBl6BsTFJIG6cz7fUQ_zUpsQ1kso63JZxlJqgdYBTHD5ZkVjo8Eg/exec",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      name:name,
+      email:email,
+      score:totalScore,
+      percent:percentage,
+      feedback:resultText.textContent
     })
-    .then(response => response.text())
-    .then(data => console.log("Saved:", data))
-    .catch(error => console.error("Error:", error));
-}
+  })
+  .then(res=>res.text())
+  .then(data=>{
+    alert("Report saved and PDF sent to your email.");
+  })
+  .catch(err=>{
+    alert("Error sending report.");
+  });
+
+});
+
