@@ -1,4 +1,4 @@
-# WiseGud 💙  
+# WiseGud 🩵  
 A Mental Health Self-Assessment Online Web Application
 
 ## 📌 Project Overview
